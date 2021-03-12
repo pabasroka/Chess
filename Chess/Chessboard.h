@@ -1,21 +1,26 @@
 #pragma once
-#include<SFML/Graphics.hpp>
-#include<iostream>
+#include"Field.h"
+#include <vector>
+#include <tuple>
 
 class Chessboard
 {
 	sf::RectangleShape* pieces;
+	std::vector<Field*> fields;
 	int number; 
+	char x;
+	int y;
 
 	void initVariables();
 	void createNewChessboard();
-	void mouseHover();
+	void mouseHover(sf::RenderWindow& target);
+	std::tuple<char, int> fieldPositon(sf::RenderWindow& target);
 
 public:
 	Chessboard();
 	virtual ~Chessboard();
 
-	void update();
+	void update(sf::RenderWindow& target);
 	void render(sf::RenderTarget& target);
 };
 

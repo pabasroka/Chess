@@ -43,7 +43,7 @@ const bool Game::running() const
 void Game::update()
 {
 	this->pollEvents();
-	this->chessboard->update();
+	this->chessboard->update(*this->window);
 }
 
 void Game::render()
