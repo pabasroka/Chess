@@ -6,14 +6,18 @@ void Chessboard::initVariables()
 	this->number = 0;
     this->x = 'a';
     this->y = 1;
+    this->blackOrWhite = 0;
 }
 
-void Chessboard::createNewChessboard() // view(pieces) and logic(Field)
+void Chessboard::initNewChessboard() // view(pieces) and logic(Field)
 {
     for (size_t i = 0; i < 8; i++)
     {
         for (size_t j = 0; j < 8; j++)
         {
+            if (this->y >= '7')
+                this->blackOrWhite = 1;
+
             this->pieces[this->number].setSize(sf::Vector2f(100, 100));
             this->pieces[this->number].setPosition(sf::Vector2f(j * 100, i * 100));
 
@@ -27,7 +31,8 @@ void Chessboard::createNewChessboard() // view(pieces) and logic(Field)
             else
                 (this->number % 2 == 0) ? this->pieces[this->number].setFillColor(sf::Color::Blue) : this->pieces[this->number].setFillColor(sf::Color::White);
 
-            std::cout << this->x << " " << this->y << " " << this->fields.back()->getIsFieldTaken() << "\n";
+            
+            this->chessmanArray.push_back(new Chessman(this->blackOrWhite, 0, 100, 30, this->fields.back()));
 
             this->x++;
             this->number++;
@@ -35,81 +40,37 @@ void Chessboard::createNewChessboard() // view(pieces) and logic(Field)
         this->x = 'a'; 
         this->y++;
     }
+
+    
+    //this->chessmanArray.push_back(new Chessman(1, 0, 200, 420));
 }
 
 void Chessboard::mouseHover(sf::RenderWindow& target)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
-        std::cout << fields[3]->getPosX() << " " << fields[3]->getPosY() << fields[3]->getIsFieldTaken() << "\n";
-
-    //if (sf::Mouse::getPosition())
-       /* std::cout << typeid(sf::Mouse::getPosition(target).x).name() << " " 
-            << sf::Mouse::getPosition(target).x << " "
-            << typeid(sf::Mouse::getPosition(target).y).name() << " "
-            << sf::Mouse::getPosition(target).y << "\n";*/
-
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
     {
-        auto notation = fieldPositon(target);
+        auto notation = Field::fieldPositon(target);
         std::cout << std::get<0>(notation) << std::get<1>(notation) << "\n";
     }
 
 
-}
+    for (auto& ch : chessmanArray)
+        ch->drag(target, sf::Mouse::getPosition(target));
+    
+    //this->chessmanArray[0]->drag(target, sf::Mouse::getPosition(target));
+    //this->chessmanArray[1]->drag(target, sf::Mouse::getPosition(target));
 
-std::tuple<char, int> Chessboard::fieldPositon(sf::RenderWindow& target)
-{
-    char x{};
-    int y{};
-    int posX = sf::Mouse::getPosition(target).x;
-    int posY = sf::Mouse::getPosition(target).y;
-
-    if (posX >= 0 && posX < 100)
-        x = 'a';
-    else if (posX >= 100 && posX < 200)
-        x = 'b';
-    else if (posX >= 200 && posX < 300)
-        x = 'c';
-    else if (posX >= 300 && posX < 400)
-        x = 'd';
-    else if (posX >= 400 && posX < 500)
-        x = 'e';
-    else if (posX >= 500 && posX < 600)
-        x = 'f';
-    else if (posX >= 600 && posX < 700)
-        x = 'g';
-    else if(posX >= 700 && posX < 800)
-        x = 'h';
-
-    if (posY >= 0 && posY < 100)
-        y = 8;
-    else if (posY >= 100 && posY < 200)
-        y = 7;
-    else if (posY >= 200 && posY < 300)
-        y = 6;
-    else if (posY >= 300 && posY < 400)
-        y = 5;
-    else if (posY >= 400 && posY < 500)
-        y = 4;
-    else if (posY >= 500 && posY < 600)
-        y = 3;
-    else if (posY >= 600 && posY < 700)
-        y = 2;
-    else if (posY >= 700 && posY < 800)
-        y = 1;
-
-    return { x, y };
 }
 
 Chessboard::Chessboard()
 {
 	this->initVariables();
-	this->createNewChessboard();
+	this->initNewChessboard();
 }
 
 Chessboard::~Chessboard()
 {
-    delete[] pieces;
+    delete[] this->pieces;
 }
 
 void Chessboard::update(sf::RenderWindow& target)
@@ -121,4 +82,8 @@ void Chessboard::render(sf::RenderTarget& target)
 {
 	for (size_t i = 0; i < 64; i++)
 		target.draw(this->pieces[i]);
+
+    for (size_t i = 0; i < this->chessmanArray.size(); i++)
+        this->chessmanArray[i]->render(target);
+        
 }

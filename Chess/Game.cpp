@@ -3,14 +3,14 @@
 void Game::initWindow()
 {
 	this->videoMode = sf::VideoMode(800, 800);
-	this->window = new sf::RenderWindow(this->videoMode, "Chess");
+	this->window = new sf::RenderWindow(this->videoMode, "Chess", sf::Style::Close);
 	this->window->setFramerateLimit(60);
 }
 
 Game::Game()
 {
 	this->initWindow();
-	this->chessboard = new Chessboard;
+	this->chessboard = new Chessboard();
 }
 
 Game::~Game()
@@ -44,6 +44,7 @@ void Game::update()
 {
 	this->pollEvents();
 	this->chessboard->update(*this->window);
+	
 }
 
 void Game::render()

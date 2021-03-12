@@ -1,6 +1,7 @@
 #pragma once
 #include<SFML/Graphics.hpp>
 #include<iostream>
+#include <tuple>
 
 class Field
 {
@@ -9,11 +10,14 @@ class Field
 	bool isTaken;
 
 public:
+	Field();
+	Field(char x, int y, bool isTaken = false);
+	virtual ~Field();
+
+	std::tuple<char, int> fieldPositon(sf::RenderWindow& target);
+
 	char getPosX();
 	int getPosY();
 	bool getIsFieldTaken();
-
-	Field(char x, int y, bool isTaken = false);
-	virtual ~Field();
 };
 
