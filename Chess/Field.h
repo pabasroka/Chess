@@ -16,6 +16,7 @@ public:
 
 	std::tuple<char, int> fieldPositon(sf::RenderWindow& target);
 
+	char getPosXChar();
 	char getPosX();
 	int getPosY();
 	bool getIsFieldTaken();

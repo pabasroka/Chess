@@ -12,10 +12,10 @@ class Chessman : Field
 	sf::Event ev;
 
 	void initVariables();
-	void initChessman(bool blackOrWhite, int typeOfChessman, int posX, int posY, Field* chField);
+	void initChessman(bool blackOrWhite, int typeOfChessman, Field* chField);
 
 public:
-	Chessman(bool blackOrWhite, int typeOfChessman, int posX, int posY, Field* chField);
+	Chessman(bool blackOrWhite, int typeOfChessman, Field* chField);
 	virtual ~Chessman();
 
 	void drag(sf::RenderWindow& target, sf::Vector2i pos);

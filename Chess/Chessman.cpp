@@ -7,20 +7,20 @@ void Chessman::initVariables()
     this->chessman.setTexture(this->gameTextures);
 }
 
-void Chessman::initChessman(bool blackOrWhite, int typeOfChessman, int posX, int posY, Field* chField)
+void Chessman::initChessman(bool blackOrWhite, int typeOfChessman, Field* chField)
 {
     this->chessmanSrc = sf::IntRect(blackOrWhite * 16, typeOfChessman * 16, 16, 16);
     this->chessman.setTextureRect(this->chessmanSrc);
     this->chessman.setOrigin(sf::Vector2f(this->chessman.getGlobalBounds().width / 2, this->chessman.getGlobalBounds().height / 2));
-    this->chessman.setScale(sf::Vector2f(6.2f, 6.2f));
+    this->chessman.setScale(sf::Vector2f(6.f, 6.f));
     
-    this->chessman.setPosition(sf::Vector2f(20, chField->getPosY()));
+    this->chessman.setPosition(sf::Vector2f(chField->getPosX() * 100 - 50, chField->getPosY() * 100 - 50));
 }
 
-Chessman::Chessman(bool blackOrWhite, int typeOfChessman, int posX, int posY, Field* chField)
+Chessman::Chessman(bool blackOrWhite, int typeOfChessman, Field* chField)
 {
     this->initVariables();
-    this->initChessman(blackOrWhite, typeOfChessman, posX, posY, chField);
+    this->initChessman(blackOrWhite, typeOfChessman, chField);
 }
 
 Chessman::~Chessman()
@@ -29,7 +29,7 @@ Chessman::~Chessman()
 
 void Chessman::drag(sf::RenderWindow& target, sf::Vector2i pos)
 {
-    /*if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) //&& sf::Mouse::getPosition().x >= 400)
+    /*if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) //&& sf::Mouse::getPosition( l).x >= 400)
     {
         auto cord = Field::fieldPositon(target);
         //std::cout << std::get<0>(notation) << std::get<1>(notation) << "\n";

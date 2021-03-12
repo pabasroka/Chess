@@ -6,7 +6,7 @@ void Chessboard::initVariables()
 	this->number = 0;
     this->x = 'a';
     this->y = 1;
-    this->blackOrWhite = 0;
+    this->blackOrWhite = 1;
 }
 
 void Chessboard::initNewChessboard() // view(pieces) and logic(Field)
@@ -15,14 +15,17 @@ void Chessboard::initNewChessboard() // view(pieces) and logic(Field)
     {
         for (size_t j = 0; j < 8; j++)
         {
-            if (this->y >= '7')
-                this->blackOrWhite = 1;
+            if (this->y >= 7)
+                this->blackOrWhite = 0;
 
             this->pieces[this->number].setSize(sf::Vector2f(100, 100));
             this->pieces[this->number].setPosition(sf::Vector2f(j * 100, i * 100));
 
-            if(this->y == 1|| this->y == 2 || this->y == 7 || this->y == 8)
+            if (this->y == 1 || this->y == 2 || this->y == 7 || this->y == 8)
+            {
                 this->fields.push_back(new Field(this->x, this->y, true));
+                this->chessmanArray.push_back(new Chessman(0, this->blackOrWhite, this->fields.back()));
+            }
             else
                 this->fields.push_back(new Field(this->x, this->y));
 
@@ -32,7 +35,7 @@ void Chessboard::initNewChessboard() // view(pieces) and logic(Field)
                 (this->number % 2 == 0) ? this->pieces[this->number].setFillColor(sf::Color::Blue) : this->pieces[this->number].setFillColor(sf::Color::White);
 
             
-            this->chessmanArray.push_back(new Chessman(this->blackOrWhite, 0, 100, 30, this->fields.back()));
+            
 
             this->x++;
             this->number++;
