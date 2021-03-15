@@ -11,7 +11,7 @@ class Field
 
 public:
 	Field();
-	Field(char x, int y, bool isTaken = false);
+	Field(char x, int y, bool isTaken);
 	virtual ~Field();
 
 	std::tuple<char, int> fieldPositon(sf::RenderWindow& target);

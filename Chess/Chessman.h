@@ -9,14 +9,15 @@ class Chessman : public Field
 	sf::Sprite chessman;
 	sf::IntRect chessmanSrc;
 	sf::Vector2i newPositions;
+	sf::Vector2i startingPosition;
 
 	sf::Event ev;
 
 	void initVariables();
-	void initChessman(bool blackOrWhite, int typeOfChessman, Field* chField);
+	void initChessman(bool blackOrWhite, int typeOfChessman, Field& chField);
 
 public:
-	Chessman(bool blackOrWhite, int typeOfChessman, Field* chField);
+	Chessman(bool blackOrWhite, int typeOfChessman, Field& chField);
 	virtual ~Chessman();
 
 	void drag(sf::RenderWindow& target, sf::Vector2i pos);

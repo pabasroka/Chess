@@ -5,7 +5,7 @@ void Chessboard::initVariables()
 	this->pieces = new sf::RectangleShape[64];
 	this->number = 0;
     this->x = 'a';
-    this->y = 1;
+    this->y = 8;
     this->blackOrWhite = 1;
 }
 
@@ -15,19 +15,39 @@ void Chessboard::initNewChessboard() // view(pieces) and logic(Field)
     {
         for (size_t j = 0; j < 8; j++)
         {
-            if (this->y >= 7)
-                this->blackOrWhite = 0;
-
-            this->pieces[this->number].setSize(sf::Vector2f(100, 100));
-            this->pieces[this->number].setPosition(sf::Vector2f(j * 100, i * 100));
-
-            if (this->y == 1 || this->y == 2 || this->y == 7 || this->y == 8)
+            std::cout << this->x << " ";
+            //Field - logic
+            if (this->y == 2) 
             {
                 this->fields.push_back(new Field(this->x, this->y, true));
-                this->chessmanArray.push_back(new Chessman(0, this->blackOrWhite, this->fields.back()));
+                this->chessmanArray.push_back(new Chessman(1, 0, *this->fields.back()));
+            }
+            else if (this->y == 1)
+            {
+                this->fields.push_back(new Field(this->x, this->y, true));
+                this->chessmanArray.push_back(new Chessman(1, 0, *this->fields.back()));
+            }
+            else if (this->y == 7)
+            {
+                this->fields.push_back(new Field(this->x, this->y, true));
+                this->chessmanArray.push_back(new Chessman(0, 0, *this->fields.back()));
+            }
+            else if (this->y == 8)
+            {
+                this->fields.push_back(new Field(this->x, this->y, true));
+                switch (this->x)
+                {
+                case 'a': case 'h':
+                    this->chessmanArray.push_back(new Chessman(0, 1, *this->fields.back()));
+                    break;
+                }       
             }
             else
-                this->fields.push_back(new Field(this->x, this->y));
+                this->fields.push_back(new Field(this->x, this->y, false));
+
+            //Pieces - view 
+            this->pieces[this->number].setSize(sf::Vector2f(100, 100));
+            this->pieces[this->number].setPosition(sf::Vector2f(j * 100, i * 100));
 
             if (i % 2 == 0)
                 (this->number % 2 == 0) ? this->pieces[this->number].setFillColor(sf::Color::White) : this->pieces[this->number].setFillColor(sf::Color::Blue);
@@ -39,11 +59,9 @@ void Chessboard::initNewChessboard() // view(pieces) and logic(Field)
             this->number++;
         }
         this->x = 'a'; 
-        this->y++;
+        this->y--;
     }
 
-    
-    //this->chessmanArray.push_back(new Chessman(0, this->blackOrWhite, this->fields.back()));
 }
 
 void Chessboard::mouseHover(sf::RenderWindow& target)
@@ -78,14 +96,16 @@ void Chessboard::mouseHover(sf::RenderWindow& target)
 
 void Chessboard::showFreeFields()
 {
-    std::cout << "==============================================\n";
-    for (size_t i = 0; i < 8; i++)
+    std::cout << "\n==================================================================\n";
+    for (size_t i = 0; i < fields.size(); i++)
     {
-        for (size_t j = 0; j < 8; j++)
-            std::cout << " [" << this->chessmanArray[j]->getIsFieldTaken() << "] ";
-        std::cout << "\n\n\n";
+        if (i % 8 == 0)
+            std::cout << "\n";
+        std::cout << this->fields[i]->getPosXChar() << this->fields[i]->getPosY()
+            << " [" << this->fields[i]->getIsFieldTaken() << "] ";
+        
     }
-
+    std::cout << "\n==================================================================\n\n";
 }
 
 Chessboard::Chessboard()

@@ -125,6 +125,8 @@ sf::Vector2i Field::newPosition(sf::Vector2i pos)
         nX = 650;
     else if (pos.x >= 700 && pos.x < 800)
         nX = 750;
+    else
+        nX = -1;
 
     if (pos.y >= 0 && pos.y < 100)
         nY = 50;//8
@@ -142,6 +144,8 @@ sf::Vector2i Field::newPosition(sf::Vector2i pos)
         nY = 650;
     else if (pos.y >= 700 && pos.y < 800)
         nY = 750;//1
+    else
+        nY = -1;
 
     return sf::Vector2i(nX, nY);
 }
