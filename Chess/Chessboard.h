@@ -23,6 +23,7 @@ public:
 	virtual ~Chessboard();
 
 	void mouseHover(sf::RenderWindow& target);
+	void showFreeFields();
 
 	void update(sf::RenderWindow& target);
 	void render(sf::RenderTarget& target);

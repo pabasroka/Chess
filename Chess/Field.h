@@ -15,6 +15,7 @@ public:
 	virtual ~Field();
 
 	std::tuple<char, int> fieldPositon(sf::RenderWindow& target);
+	sf::Vector2i newPosition(sf::Vector2i pos);
 
 	char getPosXChar();
 	char getPosX();

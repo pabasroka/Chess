@@ -106,3 +106,42 @@ std::tuple<char, int> Field::fieldPositon(sf::RenderWindow& target)
     return { x, y };
 }
 
+sf::Vector2i Field::newPosition(sf::Vector2i pos)
+{
+    int nX{}, nY{};
+    if (pos.x >= 0 && pos.x < 100)
+        nX = 50;
+    else if (pos.x >= 100 && pos.x < 200)
+        nX = 150;
+    else if (pos.x >= 200 && pos.x < 300)
+        nX = 250;
+    else if (pos.x >= 300 && pos.x < 400)
+        nX = 350;
+    else if (pos.x >= 400 && pos.x < 500)
+        nX = 450;
+    else if (pos.x >= 500 && pos.x < 600)
+        nX = 550;
+    else if (pos.x >= 600 && pos.x < 700)
+        nX = 650;
+    else if (pos.x >= 700 && pos.x < 800)
+        nX = 750;
+
+    if (pos.y >= 0 && pos.y < 100)
+        nY = 50;//8
+    else if (pos.y >= 100 && pos.y < 200)
+        nY = 150;//7
+    else if (pos.y >= 200 && pos.y < 300)
+        nY = 250;//6
+    else if (pos.y >= 300 && pos.y < 400)
+        nY = 350;
+    else if (pos.y >= 400 && pos.y < 500)
+        nY = 450;
+    else if (pos.y >= 500 && pos.y < 600)
+        nY = 550;
+    else if (pos.y >= 600 && pos.y < 700)
+        nY = 650;
+    else if (pos.y >= 700 && pos.y < 800)
+        nY = 750;//1
+
+    return sf::Vector2i(nX, nY);
+}
