@@ -10,6 +10,7 @@ class Chessman : public Field
 	sf::IntRect chessmanSrc;
 	sf::Vector2i newPositions;
 	sf::Vector2i startingPosition;
+	Field field;
 
 	sf::Event ev;
 
@@ -20,7 +21,10 @@ public:
 	Chessman(bool blackOrWhite, int typeOfChessman, Field& chField);
 	virtual ~Chessman();
 
-	void drag(sf::RenderWindow& target, sf::Vector2i pos);
+	Field getChessmanField();
+	int getFieldId();
+
+	void drag(sf::RenderWindow& target, sf::Vector2i pos, std::vector<Field*>& fields, Chessman& ch, std::vector<Chessman*>& chessmanArray);
 	bool isActive(sf::RenderWindow& target, sf::Vector2i pos, Chessman& ch);
 
 	void update(sf::RenderWindow& target);

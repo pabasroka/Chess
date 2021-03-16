@@ -15,26 +15,26 @@ void Chessboard::initNewChessboard() // view(pieces) and logic(Field)
     {
         for (size_t j = 0; j < 8; j++)
         {
-            std::cout << this->x << " ";
+            //std::cout << this->x << " ";
             //Field - logic
             if (this->y == 2) 
             {
-                this->fields.push_back(new Field(this->x, this->y, true));
+                this->fields.push_back(new Field(this->number, this->x, this->y, true));
                 this->chessmanArray.push_back(new Chessman(1, 0, *this->fields.back()));
             }
             else if (this->y == 1)
             {
-                this->fields.push_back(new Field(this->x, this->y, true));
+                this->fields.push_back(new Field(this->number, this->x, this->y, true));
                 this->chessmanArray.push_back(new Chessman(1, 0, *this->fields.back()));
             }
             else if (this->y == 7)
             {
-                this->fields.push_back(new Field(this->x, this->y, true));
+                this->fields.push_back(new Field(this->number, this->x, this->y, true));
                 this->chessmanArray.push_back(new Chessman(0, 0, *this->fields.back()));
             }
             else if (this->y == 8)
             {
-                this->fields.push_back(new Field(this->x, this->y, true));
+                this->fields.push_back(new Field(this->number, this->x, this->y, true));
                 switch (this->x)
                 {
                 case 'a': case 'h':
@@ -43,7 +43,7 @@ void Chessboard::initNewChessboard() // view(pieces) and logic(Field)
                 }       
             }
             else
-                this->fields.push_back(new Field(this->x, this->y, false));
+                this->fields.push_back(new Field(this->number, this->x, this->y, false));
 
             //Pieces - view 
             this->pieces[this->number].setSize(sf::Vector2f(100, 100));
@@ -53,7 +53,6 @@ void Chessboard::initNewChessboard() // view(pieces) and logic(Field)
                 (this->number % 2 == 0) ? this->pieces[this->number].setFillColor(sf::Color::White) : this->pieces[this->number].setFillColor(sf::Color::Blue);
             else
                 (this->number % 2 == 0) ? this->pieces[this->number].setFillColor(sf::Color::Blue) : this->pieces[this->number].setFillColor(sf::Color::White);
-
 
             this->x++;
             this->number++;
@@ -68,8 +67,11 @@ void Chessboard::mouseHover(sf::RenderWindow& target)
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
     {
-        auto notation = Field::fieldPositon(target);
-        std::cout << std::get<0>(notation) << std::get<1>(notation) << "\n";
+        //auto notation = Field::fieldPositon(target);
+        //std::cout << std::get<0>(notation) << std::get<1>(notation) << "\n";
+        //std::cout << this->chessmanArray[0]->getChessmanField().getPosX() << " ?? " << this->fields[0]->getPosX();
+        //std::cout << " \n" << this->fields.at(this->chessmanArray[1]->getId());
+        std::cout << this->chessmanArray[1]->getFieldId() << ":" << this->fields[1]->getId() << " " << this->fields[0]->getPosXChar() << this->fields[0]->getPosY() << " ";
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
@@ -84,7 +86,15 @@ void Chessboard::mouseHover(sf::RenderWindow& target)
     {
         if (ch->isActive(target, sf::Mouse::getPosition(target), *ch))
         {
-            ch->drag(target, sf::Mouse::getPosition(target));
+            //std::cout << "stare: " << ch->getFieldId() << " cord: " << ch->getPosXChar() << " : " << ch->getPosY() << "\n";
+            
+            //ch->getChessmanField().setFieldStatus(0);
+            //this->fields.at(ch->getFieldId())->setFieldStatus(0);
+            ch->drag(target, sf::Mouse::getPosition(target), this->fields, *ch, this->chessmanArray);
+            //this->fields.at(ch->getFieldId())->setFieldStatus(1);
+            //std::cout << "nowy: " << ch->getFieldId() << " cord: " << ch->getPosXChar() << " : " << ch->getPosY() << "\n";
+            //->getChessmanField().setFieldStatus(1);
+            //if(ch->getChessmanField().getPosX())
             break;
         }
     }

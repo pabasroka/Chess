@@ -7,6 +7,7 @@ class Chessboard : public Field
 {
 	sf::RectangleShape* pieces;
 	std::vector<Field*> fields;
+	//Field* fields;
 	std::vector<Chessman*> chessmanArray;
 	
 	int number; 

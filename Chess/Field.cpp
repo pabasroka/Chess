@@ -4,8 +4,9 @@ Field::Field()
 {
 }
 
-Field::Field(char x, int y, bool isTaken)
+Field::Field(int id, char x, int y, bool isTaken)
 {
+    this->id = id;
     this->x = x;
     this->y = y;
     this->isTaken = isTaken;
@@ -15,7 +16,7 @@ Field::~Field()
 {
 }
 
-char Field::getPosX()
+int Field::getPosX()
 {
     switch (this->x)
     {
@@ -47,6 +48,11 @@ char Field::getPosX()
 }
 
 
+int Field::getId()
+{
+    return this->id;
+}
+
 char Field::getPosXChar()
 {
 	return this->x;
@@ -60,6 +66,11 @@ int Field::getPosY()
 bool Field::getIsFieldTaken()
 {
 	return this->isTaken;
+}
+
+void Field::setFieldStatus(bool yesOrNo)
+{
+    this->isTaken = yesOrNo;
 }
 
 std::tuple<char, int> Field::fieldPositon(sf::RenderWindow& target)
@@ -148,4 +159,9 @@ sf::Vector2i Field::newPosition(sf::Vector2i pos)
         nY = -1;
 
     return sf::Vector2i(nX, nY);
+}
+
+sf::Vector2i Field::positionToXY(sf::Vector2i pos)
+{
+    return sf::Vector2i();
 }
